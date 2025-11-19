@@ -1,6 +1,8 @@
+[phases.setup]
+cmds = ["yarn install"]
+
 [phases.build]
 cmds = [
-  "yarn install",
   "npx prisma generate",
   "yarn compile"
 ]
