@@ -3,7 +3,7 @@ import { PETS_TOTAL_ODDS } from './brute/pets';
 import { SKILLS_TOTAL_ODDS } from './brute/skills';
 import { WEAPONS_TOTAL_ODDS, WeaponAnimations } from './brute/weapons';
 
-export const MAX_STACK_FIGHTS = 6;
+export const MAX_STACK_FIGHTS = 15;
 export const WIN_XP = 5;
 export const LOSE_XP = 3;
 
@@ -42,7 +42,7 @@ export const PERK_ODDS: Perk[] = [
   { name: 'weapon', odds: WEAPONS_TOTAL_ODDS },
 ];
 
-export const NEW_BRUTE_BASE_COST = 500;
+export const NEW_BRUTE_BASE_COST = 0;
 
 export const FIGHTER_HEIGHT = {
   brute: 80,
@@ -81,5 +81,5 @@ export type FighterStat = keyof typeof BASE_FIGHTER_STATS;
 
 export const BARE_HANDS_DAMAGE = 5;
 
-export const RESET_PRICE = 250;
-export const REROLL_PRICE = 100;
+export const RESET_PRICE = 0;
+export const REROLL_PRICE = 0;

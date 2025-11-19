@@ -47,5 +47,8 @@
       "./server"
     ]
   },
-  "packageManager": "yarn@4.0.2"
+  "packageManager": "yarn@4.0.2",
+  "dependencies": {
+    "debug-mode": "^2.0.3"
+  }
 }

@@ -3,7 +3,7 @@
  * Client
 **/
 
-import * as runtime from './runtime/library';
+import * as runtime from './runtime/library.js';
 import $Types = runtime.Types // general types
 import $Public = runtime.Types.Public
 import $Utils = runtime.Types.Utils
@@ -256,6 +256,7 @@ export const LogType: {
   childup: 'childup',
   up: 'up',
   lvl: 'lvl',
+  trophy: 'trophy',
   survive: 'survive',
   tournament: 'tournament',
   tournamentXp: 'tournamentXp'
@@ -895,8 +896,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 5.8.1
-   * Query Engine version: 78caf6feeaed953168c64e15a249c3e9a033ebe2
+   * Prisma Client JS version: 5.10.2
+   * Query Engine version: 5a9203d0590c951969e85a7d07215503f4672eb9
    */
   export type PrismaVersion = {
     client: string
@@ -2859,6 +2860,16 @@ export namespace Prisma {
      * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
      */
     log?: (LogLevel | LogDefinition)[]
+    /**
+     * The default values for transactionOptions
+     * maxWait ?= 2000
+     * timeout ?= 5000
+     */
+    transactionOptions?: {
+      maxWait?: number
+      timeout?: number
+      isolationLevel?: Prisma.TransactionIsolationLevel
+    }
   }
 
   /* Types for Logging */
@@ -6788,6 +6799,7 @@ export namespace Prisma {
     id: number | null
     level: number | null
     xp: number | null
+    trophy: number | null
     hp: number | null
     enduranceStat: number | null
     enduranceModifier: number | null
@@ -6815,6 +6827,7 @@ export namespace Prisma {
     id: number | null
     level: number | null
     xp: number | null
+    trophy: number | null
     hp: number | null
     enduranceStat: number | null
     enduranceModifier: number | null
@@ -6845,6 +6858,7 @@ export namespace Prisma {
     createdAt: Date | null
     level: number | null
     xp: number | null
+    trophy: number | null
     hp: number | null
     enduranceStat: number | null
     enduranceModifier: number | null
@@ -6884,6 +6898,7 @@ export namespace Prisma {
     createdAt: Date | null
     level: number | null
     xp: number | null
+    trophy: number | null
     hp: number | null
     enduranceStat: number | null
     enduranceModifier: number | null
@@ -6925,6 +6940,7 @@ export namespace Prisma {
     previousDestinyPath: number
     level: number
     xp: number
+    trophy: number
     hp: number
     enduranceStat: number
     enduranceModifier: number
@@ -6966,6 +6982,7 @@ export namespace Prisma {
     id?: true
     level?: true
     xp?: true
+    trophy?: true
     hp?: true
     enduranceStat?: true
     enduranceModifier?: true
@@ -6993,6 +7010,7 @@ export namespace Prisma {
     id?: true
     level?: true
     xp?: true
+    trophy?: true
     hp?: true
     enduranceStat?: true
     enduranceModifier?: true
@@ -7023,6 +7041,7 @@ export namespace Prisma {
     createdAt?: true
     level?: true
     xp?: true
+    trophy?: true
     hp?: true
     enduranceStat?: true
     enduranceModifier?: true
@@ -7062,6 +7081,7 @@ export namespace Prisma {
     createdAt?: true
     level?: true
     xp?: true
+    trophy?: true
     hp?: true
     enduranceStat?: true
     enduranceModifier?: true
@@ -7103,6 +7123,7 @@ export namespace Prisma {
     previousDestinyPath?: true
     level?: true
     xp?: true
+    trophy?: true
     hp?: true
     enduranceStat?: true
     enduranceModifier?: true
@@ -7234,6 +7255,7 @@ export namespace Prisma {
     previousDestinyPath: $Enums.DestinyChoiceSide[]
     level: number
     xp: number
+    trophy: number
     hp: number
     enduranceStat: number
     enduranceModifier: number
@@ -7297,6 +7319,7 @@ export namespace Prisma {
     previousDestinyPath?: boolean
     level?: boolean
     xp?: boolean
+    trophy?: boolean
     hp?: boolean
     enduranceStat?: boolean
     enduranceModifier?: boolean
@@ -7365,6 +7388,7 @@ export namespace Prisma {
     previousDestinyPath?: boolean
     level?: boolean
     xp?: boolean
+    trophy?: boolean
     hp?: boolean
     enduranceStat?: boolean
     enduranceModifier?: boolean
@@ -7464,6 +7488,7 @@ export namespace Prisma {
       previousDestinyPath: $Enums.DestinyChoiceSide[]
       level: number
       xp: number
+      trophy: number
       hp: number
       enduranceStat: number
       enduranceModifier: number
@@ -7944,6 +7969,7 @@ export namespace Prisma {
     readonly previousDestinyPath: FieldRef<"Brute", 'DestinyChoiceSide[]'>
     readonly level: FieldRef<"Brute", 'Int'>
     readonly xp: FieldRef<"Brute", 'Int'>
+    readonly trophy: FieldRef<"Brute", 'Int'>
     readonly hp: FieldRef<"Brute", 'Int'>
     readonly enduranceStat: FieldRef<"Brute", 'Int'>
     readonly enduranceModifier: FieldRef<"Brute", 'Float'>
@@ -26548,6 +26574,7 @@ export namespace Prisma {
     previousDestinyPath: 'previousDestinyPath',
     level: 'level',
     xp: 'xp',
+    trophy: 'trophy',
     hp: 'hp',
     enduranceStat: 'enduranceStat',
     enduranceModifier: 'enduranceModifier',
@@ -27098,12 +27125,12 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
-    id?: UuidFilter<"User"> | string
+    id?: StringFilter<"User"> | string
     lang?: EnumLangFilter<"User"> | $Enums.Lang
     name?: StringFilter<"User"> | string
     admin?: BoolFilter<"User"> | boolean
     moderator?: BoolFilter<"User"> | boolean
-    connexionToken?: UuidFilter<"User"> | string
+    connexionToken?: StringFilter<"User"> | string
     bruteLimit?: IntFilter<"User"> | number
     gold?: IntFilter<"User"> | number
     fightSpeed?: IntFilter<"User"> | number
@@ -27140,7 +27167,7 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     admin?: BoolFilter<"User"> | boolean
     moderator?: BoolFilter<"User"> | boolean
-    connexionToken?: UuidFilter<"User"> | string
+    connexionToken?: StringFilter<"User"> | string
     bruteLimit?: IntFilter<"User"> | number
     gold?: IntFilter<"User"> | number
     fightSpeed?: IntFilter<"User"> | number
@@ -27173,12 +27200,12 @@ export namespace Prisma {
     AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
-    id?: UuidWithAggregatesFilter<"User"> | string
+    id?: StringWithAggregatesFilter<"User"> | string
     lang?: EnumLangWithAggregatesFilter<"User"> | $Enums.Lang
     name?: StringWithAggregatesFilter<"User"> | string
     admin?: BoolWithAggregatesFilter<"User"> | boolean
     moderator?: BoolWithAggregatesFilter<"User"> | boolean
-    connexionToken?: UuidWithAggregatesFilter<"User"> | string
+    connexionToken?: StringWithAggregatesFilter<"User"> | string
     bruteLimit?: IntWithAggregatesFilter<"User"> | number
     gold?: IntWithAggregatesFilter<"User"> | number
     fightSpeed?: IntWithAggregatesFilter<"User"> | number
@@ -27416,6 +27443,7 @@ export namespace Prisma {
     previousDestinyPath?: EnumDestinyChoiceSideNullableListFilter<"Brute">
     level?: IntFilter<"Brute"> | number
     xp?: IntFilter<"Brute"> | number
+    trophy?: IntFilter<"Brute"> | number
     hp?: IntFilter<"Brute"> | number
     enduranceStat?: IntFilter<"Brute"> | number
     enduranceModifier?: FloatFilter<"Brute"> | number
@@ -27431,7 +27459,7 @@ export namespace Prisma {
     speedValue?: IntFilter<"Brute"> | number
     ranking?: IntFilter<"Brute"> | number
     gender?: EnumGenderFilter<"Brute"> | $Enums.Gender
-    userId?: UuidNullableFilter<"Brute"> | string | null
+    userId?: StringNullableFilter<"Brute"> | string | null
     weapons?: EnumWeaponNameNullableListFilter<"Brute">
     skills?: EnumSkillNameNullableListFilter<"Brute">
     pets?: EnumPetNameNullableListFilter<"Brute">
@@ -27483,6 +27511,7 @@ export namespace Prisma {
     previousDestinyPath?: SortOrder
     level?: SortOrder
     xp?: SortOrder
+    trophy?: SortOrder
     hp?: SortOrder
     enduranceStat?: SortOrder
     enduranceModifier?: SortOrder
@@ -27553,6 +27582,7 @@ export namespace Prisma {
     previousDestinyPath?: EnumDestinyChoiceSideNullableListFilter<"Brute">
     level?: IntFilter<"Brute"> | number
     xp?: IntFilter<"Brute"> | number
+    trophy?: IntFilter<"Brute"> | number
     hp?: IntFilter<"Brute"> | number
     enduranceStat?: IntFilter<"Brute"> | number
     enduranceModifier?: FloatFilter<"Brute"> | number
@@ -27568,7 +27598,7 @@ export namespace Prisma {
     speedValue?: IntFilter<"Brute"> | number
     ranking?: IntFilter<"Brute"> | number
     gender?: EnumGenderFilter<"Brute"> | $Enums.Gender
-    userId?: UuidNullableFilter<"Brute"> | string | null
+    userId?: StringNullableFilter<"Brute"> | string | null
     weapons?: EnumWeaponNameNullableListFilter<"Brute">
     skills?: EnumSkillNameNullableListFilter<"Brute">
     pets?: EnumPetNameNullableListFilter<"Brute">
@@ -27620,6 +27650,7 @@ export namespace Prisma {
     previousDestinyPath?: SortOrder
     level?: SortOrder
     xp?: SortOrder
+    trophy?: SortOrder
     hp?: SortOrder
     enduranceStat?: SortOrder
     enduranceModifier?: SortOrder
@@ -27672,6 +27703,7 @@ export namespace Prisma {
     previousDestinyPath?: EnumDestinyChoiceSideNullableListFilter<"Brute">
     level?: IntWithAggregatesFilter<"Brute"> | number
     xp?: IntWithAggregatesFilter<"Brute"> | number
+    trophy?: IntWithAggregatesFilter<"Brute"> | number
     hp?: IntWithAggregatesFilter<"Brute"> | number
     enduranceStat?: IntWithAggregatesFilter<"Brute"> | number
     enduranceModifier?: FloatWithAggregatesFilter<"Brute"> | number
@@ -27687,7 +27719,7 @@ export namespace Prisma {
     speedValue?: IntWithAggregatesFilter<"Brute"> | number
     ranking?: IntWithAggregatesFilter<"Brute"> | number
     gender?: EnumGenderWithAggregatesFilter<"Brute"> | $Enums.Gender
-    userId?: UuidNullableWithAggregatesFilter<"Brute"> | string | null
+    userId?: StringNullableWithAggregatesFilter<"Brute"> | string | null
     weapons?: EnumWeaponNameNullableListFilter<"Brute">
     skills?: EnumSkillNameNullableListFilter<"Brute">
     pets?: EnumPetNameNullableListFilter<"Brute">
@@ -28123,7 +28155,7 @@ export namespace Prisma {
     NOT?: TournamentGoldWhereInput | TournamentGoldWhereInput[]
     id?: IntFilter<"TournamentGold"> | number
     date?: DateTimeFilter<"TournamentGold"> | Date | string
-    userId?: UuidFilter<"TournamentGold"> | string
+    userId?: StringFilter<"TournamentGold"> | string
     gold?: IntFilter<"TournamentGold"> | number
     user?: XOR<UserRelationFilter, UserWhereInput>
   }
@@ -28142,7 +28174,7 @@ export namespace Prisma {
     OR?: TournamentGoldWhereInput[]
     NOT?: TournamentGoldWhereInput | TournamentGoldWhereInput[]
     date?: DateTimeFilter<"TournamentGold"> | Date | string
-    userId?: UuidFilter<"TournamentGold"> | string
+    userId?: StringFilter<"TournamentGold"> | string
     gold?: IntFilter<"TournamentGold"> | number
     user?: XOR<UserRelationFilter, UserWhereInput>
   }, "id">
@@ -28165,7 +28197,7 @@ export namespace Prisma {
     NOT?: TournamentGoldScalarWhereWithAggregatesInput | TournamentGoldScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"TournamentGold"> | number
     date?: DateTimeWithAggregatesFilter<"TournamentGold"> | Date | string
-    userId?: UuidWithAggregatesFilter<"TournamentGold"> | string
+    userId?: StringWithAggregatesFilter<"TournamentGold"> | string
     gold?: IntWithAggregatesFilter<"TournamentGold"> | number
   }
 
@@ -28229,7 +28261,7 @@ export namespace Prisma {
     name?: EnumAchievementNameFilter<"Achievement"> | $Enums.AchievementName
     count?: IntFilter<"Achievement"> | number
     bruteId?: IntNullableFilter<"Achievement"> | number | null
-    userId?: UuidNullableFilter<"Achievement"> | string | null
+    userId?: StringNullableFilter<"Achievement"> | string | null
     brute?: XOR<BruteNullableRelationFilter, BruteWhereInput> | null
     user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
   }
@@ -28253,7 +28285,7 @@ export namespace Prisma {
     name?: EnumAchievementNameFilter<"Achievement"> | $Enums.AchievementName
     count?: IntFilter<"Achievement"> | number
     bruteId?: IntNullableFilter<"Achievement"> | number | null
-    userId?: UuidNullableFilter<"Achievement"> | string | null
+    userId?: StringNullableFilter<"Achievement"> | string | null
     brute?: XOR<BruteNullableRelationFilter, BruteWhereInput> | null
     user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
   }, "id" | "name_bruteId">
@@ -28279,7 +28311,7 @@ export namespace Prisma {
     name?: EnumAchievementNameWithAggregatesFilter<"Achievement"> | $Enums.AchievementName
     count?: IntWithAggregatesFilter<"Achievement"> | number
     bruteId?: IntNullableWithAggregatesFilter<"Achievement"> | number | null
-    userId?: UuidNullableWithAggregatesFilter<"Achievement"> | string | null
+    userId?: StringNullableWithAggregatesFilter<"Achievement"> | string | null
   }
 
   export type TitleWhereInput = {
@@ -29159,6 +29191,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -29222,6 +29255,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -29284,6 +29318,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -29347,6 +29382,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -29410,6 +29446,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -29453,6 +29490,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -29493,6 +29531,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -30538,25 +30577,6 @@ export namespace Prisma {
     bruteId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type UuidFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedUuidFilter<$PrismaModel> | string
-  }
-
-  export type EnumLangFilter<$PrismaModel = never> = {
-    equals?: $Enums.Lang | EnumLangFieldRefInput<$PrismaModel>
-    in?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
-    not?: NestedEnumLangFilter<$PrismaModel> | $Enums.Lang
-  }
-
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -30570,6 +30590,13 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type EnumLangFilter<$PrismaModel = never> = {
+    equals?: $Enums.Lang | EnumLangFieldRefInput<$PrismaModel>
+    in?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
+    not?: NestedEnumLangFilter<$PrismaModel> | $Enums.Lang
   }
 
   export type BoolFilter<$PrismaModel = never> = {
@@ -30679,31 +30706,6 @@ export namespace Prisma {
     fightSpeed?: SortOrder
   }
 
-  export type UuidWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type EnumLangWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Lang | EnumLangFieldRefInput<$PrismaModel>
-    in?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
-    not?: NestedEnumLangWithAggregatesFilter<$PrismaModel> | $Enums.Lang
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumLangFilter<$PrismaModel>
-    _max?: NestedEnumLangFilter<$PrismaModel>
-  }
-
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -30720,6 +30722,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type EnumLangWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Lang | EnumLangFieldRefInput<$PrismaModel>
+    in?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
+    not?: NestedEnumLangWithAggregatesFilter<$PrismaModel> | $Enums.Lang
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLangFilter<$PrismaModel>
+    _max?: NestedEnumLangFilter<$PrismaModel>
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -30952,7 +30964,7 @@ export namespace Prisma {
     not?: NestedEnumGenderFilter<$PrismaModel> | $Enums.Gender
   }
 
-  export type UuidNullableFilter<$PrismaModel = never> = {
+  export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -30960,8 +30972,11 @@ export namespace Prisma {
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
     gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
-    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type EnumWeaponNameNullableListFilter<$PrismaModel = never> = {
@@ -31138,6 +31153,7 @@ export namespace Prisma {
     previousDestinyPath?: SortOrder
     level?: SortOrder
     xp?: SortOrder
+    trophy?: SortOrder
     hp?: SortOrder
     enduranceStat?: SortOrder
     enduranceModifier?: SortOrder
@@ -31177,6 +31193,7 @@ export namespace Prisma {
     id?: SortOrder
     level?: SortOrder
     xp?: SortOrder
+    trophy?: SortOrder
     hp?: SortOrder
     enduranceStat?: SortOrder
     enduranceModifier?: SortOrder
@@ -31207,6 +31224,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     level?: SortOrder
     xp?: SortOrder
+    trophy?: SortOrder
     hp?: SortOrder
     enduranceStat?: SortOrder
     enduranceModifier?: SortOrder
@@ -31246,6 +31264,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     level?: SortOrder
     xp?: SortOrder
+    trophy?: SortOrder
     hp?: SortOrder
     enduranceStat?: SortOrder
     enduranceModifier?: SortOrder
@@ -31282,6 +31301,7 @@ export namespace Prisma {
     id?: SortOrder
     level?: SortOrder
     xp?: SortOrder
+    trophy?: SortOrder
     hp?: SortOrder
     enduranceStat?: SortOrder
     enduranceModifier?: SortOrder
@@ -31359,7 +31379,7 @@ export namespace Prisma {
     _max?: NestedEnumGenderFilter<$PrismaModel>
   }
 
-  export type UuidNullableWithAggregatesFilter<$PrismaModel = never> = {
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -31367,8 +31387,11 @@ export namespace Prisma {
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
     gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
-    not?: NestedUuidNullableWithAggregatesFilter<$PrismaModel> | string | null
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
@@ -31452,21 +31475,6 @@ export namespace Prisma {
     not?: NestedEnumLogTypeFilter<$PrismaModel> | $Enums.LogType
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type FightNullableRelationFilter = {
     is?: FightWhereInput | null
     isNot?: FightWhereInput | null
@@ -31529,24 +31537,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumLogTypeFilter<$PrismaModel>
     _max?: NestedEnumLogTypeFilter<$PrismaModel>
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type EnumDestinyChoiceTypeFilter<$PrismaModel = never> = {
@@ -34188,24 +34178,6 @@ export namespace Prisma {
     update?: XOR<XOR<BruteUpdateToOneWithWhereWithoutInventoryInput, BruteUpdateWithoutInventoryInput>, BruteUncheckedUpdateWithoutInventoryInput>
   }
 
-  export type NestedUuidFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedUuidFilter<$PrismaModel> | string
-  }
-
-  export type NestedEnumLangFilter<$PrismaModel = never> = {
-    equals?: $Enums.Lang | EnumLangFieldRefInput<$PrismaModel>
-    in?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
-    not?: NestedEnumLangFilter<$PrismaModel> | $Enums.Lang
-  }
-
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -34218,6 +34190,13 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedEnumLangFilter<$PrismaModel = never> = {
+    equals?: $Enums.Lang | EnumLangFieldRefInput<$PrismaModel>
+    in?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
+    not?: NestedEnumLangFilter<$PrismaModel> | $Enums.Lang
   }
 
   export type NestedBoolFilter<$PrismaModel = never> = {
@@ -34236,30 +34215,6 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
-  export type NestedUuidWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedUuidWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedEnumLangWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Lang | EnumLangFieldRefInput<$PrismaModel>
-    in?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
-    not?: NestedEnumLangWithAggregatesFilter<$PrismaModel> | $Enums.Lang
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumLangFilter<$PrismaModel>
-    _max?: NestedEnumLangFilter<$PrismaModel>
-  }
-
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -34275,6 +34230,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type NestedEnumLangWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Lang | EnumLangFieldRefInput<$PrismaModel>
+    in?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Lang[] | ListEnumLangFieldRefInput<$PrismaModel>
+    not?: NestedEnumLangWithAggregatesFilter<$PrismaModel> | $Enums.Lang
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLangFilter<$PrismaModel>
+    _max?: NestedEnumLangFilter<$PrismaModel>
   }
 
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -34341,7 +34306,7 @@ export namespace Prisma {
     not?: NestedEnumGenderFilter<$PrismaModel> | $Enums.Gender
   }
 
-  export type NestedUuidNullableFilter<$PrismaModel = never> = {
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -34349,7 +34314,10 @@ export namespace Prisma {
     lte?: string | StringFieldRefInput<$PrismaModel>
     gt?: string | StringFieldRefInput<$PrismaModel>
     gte?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedUuidNullableFilter<$PrismaModel> | string | null
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type NestedIntNullableFilter<$PrismaModel = never> = {
@@ -34417,21 +34385,7 @@ export namespace Prisma {
     _max?: NestedEnumGenderFilter<$PrismaModel>
   }
 
-  export type NestedUuidNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedUuidNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -34442,7 +34396,10 @@ export namespace Prisma {
     contains?: string | StringFieldRefInput<$PrismaModel>
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -34487,23 +34444,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumLogTypeFilter<$PrismaModel>
     _max?: NestedEnumLogTypeFilter<$PrismaModel>
-  }
-
-  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumDestinyChoiceTypeFilter<$PrismaModel = never> = {
@@ -34701,6 +34641,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -34763,6 +34704,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -34920,6 +34862,7 @@ export namespace Prisma {
     previousDestinyPath?: EnumDestinyChoiceSideNullableListFilter<"Brute">
     level?: IntFilter<"Brute"> | number
     xp?: IntFilter<"Brute"> | number
+    trophy?: IntFilter<"Brute"> | number
     hp?: IntFilter<"Brute"> | number
     enduranceStat?: IntFilter<"Brute"> | number
     enduranceModifier?: FloatFilter<"Brute"> | number
@@ -34935,7 +34878,7 @@ export namespace Prisma {
     speedValue?: IntFilter<"Brute"> | number
     ranking?: IntFilter<"Brute"> | number
     gender?: EnumGenderFilter<"Brute"> | $Enums.Gender
-    userId?: UuidNullableFilter<"Brute"> | string | null
+    userId?: StringNullableFilter<"Brute"> | string | null
     weapons?: EnumWeaponNameNullableListFilter<"Brute">
     skills?: EnumSkillNameNullableListFilter<"Brute">
     pets?: EnumPetNameNullableListFilter<"Brute">
@@ -34979,7 +34922,7 @@ export namespace Prisma {
     name?: EnumAchievementNameFilter<"Achievement"> | $Enums.AchievementName
     count?: IntFilter<"Achievement"> | number
     bruteId?: IntNullableFilter<"Achievement"> | number | null
-    userId?: UuidNullableFilter<"Achievement"> | string | null
+    userId?: StringNullableFilter<"Achievement"> | string | null
   }
 
   export type BruteReportUpsertWithWhereUniqueWithoutUsersInput = {
@@ -35032,7 +34975,7 @@ export namespace Prisma {
     NOT?: TournamentGoldScalarWhereInput | TournamentGoldScalarWhereInput[]
     id?: IntFilter<"TournamentGold"> | number
     date?: DateTimeFilter<"TournamentGold"> | Date | string
-    userId?: UuidFilter<"TournamentGold"> | string
+    userId?: StringFilter<"TournamentGold"> | string
     gold?: IntFilter<"TournamentGold"> | number
   }
 
@@ -35044,6 +34987,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -35106,6 +35050,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -35183,6 +35128,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -35245,6 +35191,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -35306,6 +35253,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -35368,6 +35316,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -35445,6 +35394,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -35507,6 +35457,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -35683,6 +35634,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -35745,6 +35697,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -35811,6 +35764,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -35873,6 +35827,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -36122,6 +36077,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -36184,6 +36140,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -36250,6 +36207,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -36312,6 +36270,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -36765,6 +36724,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -36827,6 +36787,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -37367,6 +37328,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -37429,6 +37391,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -37495,6 +37458,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -37557,6 +37521,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -37684,6 +37649,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -37746,6 +37712,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -37818,6 +37785,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -37880,6 +37848,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -37983,6 +37952,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -38045,6 +38015,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -38150,6 +38121,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -38212,6 +38184,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -38307,6 +38280,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -38369,6 +38343,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -38446,6 +38421,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -38508,6 +38484,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -38569,6 +38546,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -38631,6 +38609,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -38858,6 +38837,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -38920,6 +38900,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -38997,6 +38978,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -39059,6 +39041,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -39200,6 +39183,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -39262,6 +39246,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -39339,6 +39324,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -39401,6 +39387,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -39462,6 +39449,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -39524,6 +39512,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -39638,6 +39627,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -39700,6 +39690,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -39804,6 +39795,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -39866,6 +39858,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -39948,6 +39941,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -40010,6 +40004,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -40124,6 +40119,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -40186,6 +40182,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -40259,12 +40256,12 @@ export namespace Prisma {
     AND?: UserScalarWhereInput | UserScalarWhereInput[]
     OR?: UserScalarWhereInput[]
     NOT?: UserScalarWhereInput | UserScalarWhereInput[]
-    id?: UuidFilter<"User"> | string
+    id?: StringFilter<"User"> | string
     lang?: EnumLangFilter<"User"> | $Enums.Lang
     name?: StringFilter<"User"> | string
     admin?: BoolFilter<"User"> | boolean
     moderator?: BoolFilter<"User"> | boolean
-    connexionToken?: UuidFilter<"User"> | string
+    connexionToken?: StringFilter<"User"> | string
     bruteLimit?: IntFilter<"User"> | number
     gold?: IntFilter<"User"> | number
     fightSpeed?: IntFilter<"User"> | number
@@ -40279,6 +40276,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -40341,6 +40339,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -40407,6 +40406,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -40469,6 +40469,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -40540,6 +40541,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -40602,6 +40604,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -40717,6 +40720,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -40779,6 +40783,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -40916,6 +40921,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -40978,6 +40984,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -41112,6 +41119,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -41174,6 +41182,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -41279,6 +41288,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -41341,6 +41351,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -41452,6 +41463,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -41514,6 +41526,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -41575,6 +41588,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -41637,6 +41651,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -41714,6 +41729,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -41776,6 +41792,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -41838,6 +41855,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -41893,6 +41911,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -41955,6 +41974,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -42017,6 +42037,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -42123,6 +42144,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -42260,6 +42282,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -42322,6 +42345,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -42384,6 +42408,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -42581,6 +42606,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -42643,6 +42669,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -42705,6 +42732,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -42748,6 +42776,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -42810,6 +42839,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -42872,6 +42902,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -43153,6 +43184,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -43215,6 +43247,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -43277,6 +43310,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -43337,6 +43371,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -43399,6 +43434,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -43461,6 +43497,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -43550,6 +43587,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -43593,6 +43631,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteCreatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: number
     xp?: number
+    trophy?: number
     hp?: number
     enduranceStat?: number
     enduranceModifier?: number
@@ -43646,6 +43685,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -43708,6 +43748,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -43770,6 +43811,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -43812,6 +43854,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -43874,6 +43917,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
@@ -43936,6 +43980,7 @@ export namespace Prisma {
     previousDestinyPath?: BruteUpdatepreviousDestinyPathInput | $Enums.DestinyChoiceSide[]
     level?: IntFieldUpdateOperationsInput | number
     xp?: IntFieldUpdateOperationsInput | number
+    trophy?: IntFieldUpdateOperationsInput | number
     hp?: IntFieldUpdateOperationsInput | number
     enduranceStat?: IntFieldUpdateOperationsInput | number
     enduranceModifier?: FloatFieldUpdateOperationsInput | number
