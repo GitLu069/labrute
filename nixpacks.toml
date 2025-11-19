@@ -1,0 +1,7 @@
+[phases.build]
+cmds = [
+  "npx prisma generate"
+]
+
+[start]
+cmd = "yarn dev"
